@@ -160,3 +160,80 @@ Here, `type` can be a BSON type number or a string representation of the BSON ty
 These logical query operators can be combined and nested to construct complex query conditions based on your specific requirements. Remember to adjust `collection_name`, `field`, and `condition` as per your actual collection and query conditions.
 
 For more information and examples, you can refer to the MongoDB documentation on query operators: https://docs.mongodb.com/manual/reference/operator/query/logical/
+
+## Mongoose
+When working with MongoDB in Node.js, Mongoose is a popular npm package that provides a convenient and elegant way to interact with the MongoDB database. Here are some common functions and features provided by Mongoose:
+
+1. **Connecting to MongoDB**: Establishes a connection to the MongoDB database using the `connect` method.
+   ```javascript
+   const mongoose = require('mongoose');
+   mongoose.connect('mongodb://localhost/mydatabase', options);
+   ```
+
+2. **Defining a Schema**: Creates a schema that defines the structure of documents in a collection using the `Schema` constructor.
+   ```javascript
+   const schema = new mongoose.Schema({
+     name: String,
+     age: Number,
+     email: String
+   });
+   ```
+
+3. **Creating a Model**: Creates a model from a schema that represents a specific collection in the database using the `model` method.
+   ```javascript
+   const User = mongoose.model('User', schema);
+   ```
+
+4. **Inserting Documents**: Creates and saves new documents in a collection using the `create` or `save` method.
+   ```javascript
+   const newUser = new User({ name: 'John', age: 30, email: 'john@example.com' });
+   newUser.save(callback);
+   ```
+
+5. **Querying Documents**: Finds documents in a collection based on a specified query using methods like `find`, `findOne`, or `findById`.
+   ```javascript
+   User.find({ age: { $gt: 25 } }, callback);
+   ```
+
+6. **Updating Documents**: Updates existing documents in a collection based on a specified query using methods like `updateOne`, `updateMany`, or `findByIdAndUpdate`.
+   ```javascript
+   User.updateOne({ _id: userId }, { name: 'John Doe' }, callback);
+   ```
+
+7. **Deleting Documents**: Removes documents from a collection based on a specified query using methods like `deleteOne`, `deleteMany`, or `findByIdAndDelete`.
+   ```javascript
+   User.deleteOne({ _id: userId }, callback);
+   ```
+
+8. **Populating References**: Retrieves related documents from other collections by populating references using the `populate` method.
+   ```javascript
+   User.find().populate('posts').exec(callback);
+   ```
+
+9. **Validation**: Defines validation rules for schema fields using various validators provided by Mongoose.
+   ```javascript
+   const schema = new mongoose.Schema({
+     name: {
+       type: String,
+       required: true
+     },
+     age: {
+       type: Number,
+       min: 18
+     },
+     email: {
+       type: String,
+       unique: true
+     }
+   });
+   ```
+
+10. **Middleware**: Defines pre and post hooks for executing functions before or after certain events, such as saving or removing documents.
+    ```javascript
+    schema.pre('save', function(next) {
+      // Perform some operations before saving
+      next();
+    });
+    ```
+
+These are just a few examples of the common functions and features provided by Mongoose. Mongoose offers many more functionalities, including validation, middleware, virtual properties, and more. For a comprehensive understanding, it is recommended to refer to the Mongoose documentation, which provides detailed explanations and examples for each feature.

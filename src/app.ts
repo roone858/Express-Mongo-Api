@@ -1,21 +1,21 @@
 import express from "express";
 import "./db";
+import productRoutes from "./routes/product";
+import usersRoutes from "./routes/user";
+import ordersRoutes from "./routes/order";
+import { Request, Response, NextFunction } from "express";
+import { errorHandling } from "./middleware/errorHandlingMiddleware";
+import { auditMiddleware } from "./middleware/auditMiddleware";
+
 const app = express();
 
-import {
-  getAllProducts,
-  getOneProduct,
-  InsertProduct,
-  deleteProduct,
-  updateProduct,
-} from "./handlers/productsHandler";
+app.use(auditMiddleware)
 
-app.use(express.json());
-app.get("/", getAllProducts);
-app.get("/:id", getOneProduct);
-app.post("/", InsertProduct);
-app.put("/:id", updateProduct);
-app.delete("/:id", deleteProduct);
+app.use("/users", usersRoutes);
+app.use("/products", productRoutes);
+app.use("/orders", ordersRoutes);
+
+app.use(errorHandling);
 
 app.listen(4000, () => {
   console.log("server lessining on port : 4000");

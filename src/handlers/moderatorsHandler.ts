@@ -1,7 +1,7 @@
 import Moderator from "../models/moderatorsModel";
 import { Response, Request, NextFunction as nf } from "express";
 
-export const getAllModeratorss = async (
+export const getAllModerators = async (
   req: Request,
   res: Response,
   next: nf
@@ -14,7 +14,7 @@ export const getAllModeratorss = async (
   }
 };
 
-export const getOneModerators = async (
+export const getOneModerator = async (
   req: Request,
   res: Response,
   next: nf
@@ -28,7 +28,7 @@ export const getOneModerators = async (
   }
 };
 
-export const InsertModerators = async (
+export const InsertModerator = async (
   req: Request,
   res: Response,
   next: nf
@@ -44,7 +44,7 @@ export const InsertModerators = async (
   }
 };
 
-export const updateModerators = async (
+export const updateModerator = async (
   req: Request,
   res: Response,
   next: nf
@@ -63,7 +63,7 @@ export const updateModerators = async (
   }
 };
 
-export const deleteModerators = async (
+export const deleteModerator = async (
   req: Request,
   res: Response,
   next: nf

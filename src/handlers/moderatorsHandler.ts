@@ -1,6 +1,7 @@
 import Moderator from "../models/moderatorsModel";
 import { Response, Request, NextFunction as nf } from "express";
 import { passwordValidator } from "../utils/passwordValidator";
+import { generateHash } from "../utils/HashPassword";
 
 export const getAllModerators = async (
   req: Request,
@@ -37,8 +38,8 @@ export const InsertModerator = async (
   try {
     const { username, email, password, role } = req.body;
     if (!passwordValidator(password)) return res.status(400).json({message:"password not valid"});
-
-    const moderator = new Moderator({ username, email, password, role });
+const hash = generateHash(password)
+    const moderator = new Moderator({ username, email, password:hash, role });
     await moderator.save();
     res.status(201).json(moderator);
   } catch (err) {

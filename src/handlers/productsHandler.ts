@@ -50,7 +50,6 @@ export const deleteProduct = async (req: Request, res: Response, next: nf) => {
   try {
     const id = req.params.id;
     const product = await Product.deleteOne({ _id: id });
-    console.log(product.deletedCount);
     res.status(201).json(product);
   } catch (err) {
     next(err);

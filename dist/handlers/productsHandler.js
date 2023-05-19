@@ -12,27 +12,61 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InsertProduct = exports.getOneProduct = exports.getAllProducts = void 0;
-const products_model_1 = __importDefault(require("../models/products.model"));
-const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield products_model_1.default.find();
-    res.status(201).json(products);
+exports.deleteProduct = exports.updateProduct = exports.InsertProduct = exports.getOneProduct = exports.getAllProducts = void 0;
+const productsModel_1 = __importDefault(require("../models/productsModel"));
+const getAllProducts = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield productsModel_1.default.find();
+        res.status(201).json(products);
+    }
+    catch (err) {
+        next(err);
+    }
 });
 exports.getAllProducts = getAllProducts;
-const getOneProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = yield products_model_1.default.findById(3);
-    product === null || product === void 0 ? void 0 : product.title = "product three";
-    yield (product === null || product === void 0 ? void 0 : product.save());
-    res.status(201).json(product);
+const getOneProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const productId = req.params.id;
+    try {
+        const updatedProduct = yield productsModel_1.default.findOne({ _id: productId });
+        res.status(201).json(updatedProduct);
+    }
+    catch (err) {
+        next(err);
+    }
 });
 exports.getOneProduct = getOneProduct;
-const InsertProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = new products_model_1.default({
-        name: "test preoduct",
-        price: 66,
-        description: "from express app",
-    });
-    yield product.save();
-    res.status(201).json(product);
+const InsertProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { title, description, price } = req.body;
+        const product = new productsModel_1.default({ title, description, price });
+        yield product.save();
+        res.status(201).json(product);
+    }
+    catch (err) {
+        next(err);
+    }
 });
 exports.InsertProduct = InsertProduct;
+const updateProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const { title, description, price } = req.body;
+        const product = yield productsModel_1.default.findOneAndUpdate({ _id: id }, { title, description, price }, { new: true });
+        res.status(201).json(product);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.updateProduct = updateProduct;
+const deleteProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const product = yield productsModel_1.default.deleteOne({ _id: id });
+        res.status(201).json(product);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.deleteProduct = deleteProduct;

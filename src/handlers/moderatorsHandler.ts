@@ -74,7 +74,6 @@ export const deleteModerator = async (
   try {
     const id = req.params.id;
     const moderator = await Moderator.deleteOne({ _id: id });
-    console.log(moderator.deletedCount);
     res.status(201).json(moderator);
   } catch (err) {
     next(err);

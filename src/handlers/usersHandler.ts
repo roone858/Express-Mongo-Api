@@ -60,7 +60,6 @@ export const deleteUser = async (req: Request, res: Response, next: nf) => {
       console.log("User not found");
       return;
     }
-    console.log(user.deletedCount);
     res.status(204).json(user);
   } catch (err) {
     next(err);

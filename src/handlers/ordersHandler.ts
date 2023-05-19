@@ -62,7 +62,6 @@ export const deleteOrder = async (req: Request, res: Response, next: nf) => {
   try {
     const id = req.params.id;
     const order = await Order.deleteOne({ _id: id });
-    console.log(order.deletedCount);
     res.status(201).json(order);
   } catch (err) {
     next(err);

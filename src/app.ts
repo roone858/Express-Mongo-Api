@@ -15,14 +15,15 @@ const app = express();
 app.use(express.json());
 app.use(auditMiddleware);
 
+app.get("/", (req, res) => {
+  res.send("Hello, World!");
+});
 app.post("/auth/login", signIn);
 app.post("/auth/signup", signUp);
-
 app.use("/users", usersRoutes);
 app.use("/products", productRoutes);
 app.use("/orders", ordersRoutes);
 app.use("/moderators", moderatorsRoutes);
-
 
 app.use(authMiddleware);
 app.get("/checkToken", (req, res) => {
@@ -34,3 +35,4 @@ app.use(errorHandling);
 app.listen(4000, () => {
   console.log("server lessening on port : 4000");
 });
+export default app;

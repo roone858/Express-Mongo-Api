@@ -17,14 +17,14 @@ const moderatorsModel_1 = __importDefault(require("../models/moderatorsModel"));
 const HashPassword_1 = require("../utils/HashPassword");
 const generateToken_1 = require("../utils/generateToken");
 const moderatorsHandler_1 = require("./moderatorsHandler");
-const signIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     const mod = yield moderatorsModel_1.default.findOne({ username: username });
     if (!mod)
-        return res.json({ message: "Username not Found" });
+        return res.json({ message: 'Username not Found' });
     const isPasswordCorrect = (0, HashPassword_1.compareHash)(password, mod.password);
     if (!isPasswordCorrect)
-        return res.json({ message: "Password is  incorrect" });
+        return res.json({ message: 'Password is  incorrect' });
     const token = (0, generateToken_1.generateToken)(username);
     res.json({ token: token, user: mod.username });
 });

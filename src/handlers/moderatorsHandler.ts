@@ -37,7 +37,8 @@ export const InsertModerator = async (
 ) => {
   try {
     const { username, email, password, role } = req.body;
-    if (!passwordValidator(password)) return res.status(400).json({message: 'password not valid'});
+    if (!passwordValidator(password))
+      return res.status(400).json({ message: 'password not valid' });
     const hash = generateHash(password);
     const moderator = new Moderator({ username, email, password: hash, role });
     await moderator.save();

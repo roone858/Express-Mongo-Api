@@ -41,7 +41,7 @@ const InsertModerator = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     try {
         const { username, email, password, role } = req.body;
         if (!(0, passwordValidator_1.passwordValidator)(password))
-            return res.status(400).json({ message: "password not valid" });
+            return res.status(400).json({ message: 'password not valid' });
         const hash = (0, HashPassword_1.generateHash)(password);
         const moderator = new moderatorsModel_1.default({ username, email, password: hash, role });
         yield moderator.save();

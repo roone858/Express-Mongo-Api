@@ -12,6 +12,6 @@ const router = express.Router();
 router.get('/', getAllModerators);
 router.get('/:id', getOneModerator);
 router.post('/', InsertModerator);
-router.put('/:id', deleteModerator);
-router.delete('/:id', updateModerator);
+router.put('/:id', updateModerator);
+router.delete('/:id', deleteModerator);
 export default router;

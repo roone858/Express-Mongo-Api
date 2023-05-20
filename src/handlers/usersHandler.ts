@@ -2,7 +2,6 @@ import User from '../models/usersModel';
 import { Response, Request } from 'express';
 import { NextFunction as nf } from 'connect';
 
-
 export const getAllUsers = async (req: Request, res: Response, next: nf) => {
   try {
     const users = await User.find();

@@ -12,7 +12,7 @@ function auditMiddleware(req, res, next) {
     // Log the incoming request
     const auditLog = `Incoming Request: ${req.method} ${req.originalUrl}\n`;
     // Log the incoming request
-    fs_1.default.appendFileSync("audit.log", auditLog, { flag: "a" });
+    fs_1.default.appendFileSync('audit.log', auditLog, { flag: 'a' });
     // Store the start time of the request
     const startTime = new Date().getTime();
     // Override the res.end method to log the outgoing response
@@ -22,11 +22,11 @@ function auditMiddleware(req, res, next) {
         // Restore the original res.end method
         // Log the outgoing response
         const responseLog = `Outgoing Response: ${req.method} ${req.originalUrl} ${res.statusCode}\n`;
-        fs_1.default.appendFileSync("audit.log", responseLog, { flag: "a" });
+        fs_1.default.appendFileSync('audit.log', responseLog, { flag: 'a' });
         // Calculate the request duration
         const duration = new Date().getTime() - startTime;
         const durationLog = `Request Duration: ${duration}ms\n`;
-        fs_1.default.appendFileSync("audit.log", durationLog, { flag: "a" });
+        fs_1.default.appendFileSync('audit.log', durationLog, { flag: 'a' });
         // Call the original res.end method
         res.end = originalEnd;
         res.end(chunk);

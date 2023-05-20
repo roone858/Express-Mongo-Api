@@ -29,7 +29,7 @@ const getOneUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     try {
         const updatedUser = yield usersModel_1.default.findOne({ _id: userId });
         if (!updatedUser) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ message: 'User not found' });
         }
         res.status(200).json(updatedUser);
     }
@@ -67,7 +67,7 @@ const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         const id = req.params.id;
         const user = yield usersModel_1.default.deleteOne({ _id: id });
         if (!user) {
-            console.log("User not found");
+            console.log('User not found');
             return;
         }
         res.status(204).json(user);

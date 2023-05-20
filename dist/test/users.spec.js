@@ -14,21 +14,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../app"));
-describe("User tests", () => {
-    let userID = "";
-    let user = {
-        username: "roone",
-        email: "roone858@gmail.com",
-        password: "1234",
-        address: "Assiut - Egypt",
+describe('User tests', () => {
+    let userID = '';
+    const user = {
+        username: 'roone',
+        email: 'roone858@gmail.com',
+        password: '1234',
+        address: 'Assiut - Egypt',
     };
-    it("List Users", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app_1.default).get("/users");
+    it('List Users', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app_1.default).get('/users');
         expect(response.status).toBe(200);
         expect(response.body).toEqual([]);
     }));
-    it("Insert user ", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app_1.default).post("/users").send(user);
+    it('Insert user ', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app_1.default).post('/users').send(user);
         userID = response.body._id;
         expect(response.status).toBe(201);
         expect(response.body.username).toBe(user.username);
@@ -36,15 +36,15 @@ describe("User tests", () => {
         expect(response.body.password).toBe(user.password);
         expect(response.body.address).toBe(user.address);
     }));
-    it("Update user ", () => __awaiter(void 0, void 0, void 0, function* () {
-        let updatedUser = {
-            username: "test",
-            email: "test",
-            password: "test",
-            address: "test",
+    it('Update user ', () => __awaiter(void 0, void 0, void 0, function* () {
+        const updatedUser = {
+            username: 'test',
+            email: 'test',
+            password: 'test',
+            address: 'test',
         };
         const response = yield (0, supertest_1.default)(app_1.default)
-            .put("/users" + "/" + userID)
+            .put('/users' + '/' + userID)
             .send(updatedUser);
         expect(response.status).toBe(201);
         expect(response.body.username).toBe(updatedUser.username);
@@ -52,8 +52,8 @@ describe("User tests", () => {
         expect(response.body.password).toBe(updatedUser.password);
         expect(response.body.address).toBe(updatedUser.address);
     }));
-    it("Delete user ", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app_1.default).delete("/users" + "/" + userID);
+    it('Delete user ', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app_1.default).delete('/users' + '/' + userID);
         expect(response.status).toBe(204);
     }));
 });

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrder = exports.updateOrder = exports.pushToOrder = exports.InsertOrder = exports.getOneOrder = exports.getAllOrders = void 0;
+exports.deleteOrder = exports.updateOrder = exports.addProductToOrder = exports.InsertOrder = exports.getOneOrder = exports.getAllOrders = void 0;
 const ordersModel_1 = __importDefault(require("../models/ordersModel"));
 const getAllOrders = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -47,19 +47,32 @@ const InsertOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.InsertOrder = InsertOrder;
-const pushToOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const addProductToOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const orderId = req.params.id;
-        const { productId } = req.body;
-        const order = yield ordersModel_1.default.findOne({ _id: orderId });
-        order === null || order === void 0 ? void 0 : order.products.push({ productId: productId, quantity: 1 });
-        res.status(201).json(order);
+        let flag = false;
+        const id = req.params.id;
+        const { productId, quantity } = req.body;
+        const oldOrder = yield ordersModel_1.default.findOne({ _id: id });
+        const oldProducts = (oldOrder === null || oldOrder === void 0 ? void 0 : oldOrder.products) || [];
+        const final = oldProducts.map((obj) => {
+            if ((obj === null || obj === void 0 ? void 0 : obj.productId) == productId) {
+                flag = true;
+                return { productId, quantity: Number(obj.quantity) + 1 };
+            }
+            else {
+                return obj;
+            }
+        });
+        const newOrder = yield ordersModel_1.default.findOneAndUpdate({ _id: id }, {
+            products: flag ? [...final] : [...oldProducts, { productId, quantity }],
+        }, { new: true });
+        res.status(201).json(newOrder);
     }
     catch (err) {
         next(err);
     }
 });
-exports.pushToOrder = pushToOrder;
+exports.addProductToOrder = addProductToOrder;
 const updateOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;

@@ -8,6 +8,6 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const generateToken = (payload) => {
     return jsonwebtoken_1.default.sign({
         payload,
-    }, String(process.env.TOKEN_SECRET_KEY), { expiresIn: "1h" });
+    }, String(process.env.TOKEN_SECRET_KEY), { expiresIn: '1h' });
 };
 exports.generateToken = generateToken;

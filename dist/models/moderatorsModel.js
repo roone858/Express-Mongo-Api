@@ -28,7 +28,7 @@ const ModeratorSchema = new mongoose_1.Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, default: "moderator" },
+    role: { type: String, default: 'moderator' },
 });
-const Moderator = mongoose_1.default.model("Moderator", ModeratorSchema);
+const Moderator = mongoose_1.default.model('Moderator', ModeratorSchema);
 exports.default = Moderator;

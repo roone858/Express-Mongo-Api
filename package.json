@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npx tsc && set DATABASE_NAME=store && node ./dist/app.js",
     "dev": "npx tsc && set DATABASE_NAME=store && npx nodemon ",
-    "test": "npx tsc && set DATABASE_NAME=test && npx jasmine",
+    "test": "npx tsc && set DATABASE_NAME=test && set SERVER_PORT=3000 && npx jasmine",
     "lint": "eslint --fix . --ext .ts",
     "format": "prettier --write \"**/*.ts\""
   },

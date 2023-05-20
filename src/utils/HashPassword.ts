@@ -7,6 +7,6 @@ export const generateHash = (password: string) => {
   );
 };
 
-export const compareHash = (password: string, hash:string) => {
-  return bcrypt.compareSync(password+ process.env.HASH_PASSWORD_KEY, hash);
+export const compareHash = (password: string, hash: string) => {
+  return bcrypt.compareSync(password + process.env.HASH_PASSWORD_KEY, hash);
 };

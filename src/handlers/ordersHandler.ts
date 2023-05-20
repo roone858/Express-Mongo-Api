@@ -31,14 +31,34 @@ export const InsertOrder = async (req: Request, res: Response, next: nf) => {
   }
 };
 
-export const pushToOrder = async (req: Request, res: Response, next: nf) => {
+export const addProductToOrder = async (
+  req: Request,
+  res: Response,
+  next: nf,
+) => {
   try {
-    const orderId = req.params.id;
-    const { productId } = req.body;
-    const order = await Order.findOne({ _id: orderId });
-    order?.products.push({ productId: productId, quantity: 1 });
+    let flag = false;
+    const id = req.params.id;
+    const { productId, quantity } = req.body;
+    const oldOrder = await Order.findOne({ _id: id });
+    const oldProducts = oldOrder?.products || [];
+    const final: any = oldProducts.map((obj) => {
+      if (obj?.productId == productId) {
+        flag = true;
+        return { productId, quantity: Number(obj.quantity) + 1 };
+      } else {
+        return obj;
+      }
+    });
+    const newOrder = await Order.findOneAndUpdate(
+      { _id: id },
+      {
+        products: flag ? [...final] : [...oldProducts, { productId, quantity }],
+      },
+      { new: true },
+    );
 
-    res.status(201).json(order);
+    res.status(201).json(newOrder);
   } catch (err) {
     next(err);
   }

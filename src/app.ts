@@ -11,7 +11,7 @@ import dotenv from 'dotenv';
 import { authMiddleware } from './middleware/authMiddleware';
 dotenv.config();
 const app = express();
-
+const port = process.env.SERVER_PORT || 4000;
 app.use(express.json());
 app.use(auditMiddleware);
 
@@ -32,7 +32,7 @@ app.get('/checkToken', (req, res) => {
 
 app.use(errorHandling);
 
-app.listen(4000, () => {
-  console.log('server lessening on port : 4000');
+app.listen(port, () => {
+  console.log('server lessening on port : ', port);
 });
 export default app;

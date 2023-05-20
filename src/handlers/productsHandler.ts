@@ -1,5 +1,5 @@
-import Product from "../models/productsModel";
-import { Response, Request, NextFunction as nf } from "express";
+import Product from '../models/productsModel';
+import { Response, Request, NextFunction as nf } from 'express';
 
 export const getAllProducts = async (req: Request, res: Response, next: nf) => {
   try {
@@ -38,7 +38,7 @@ export const updateProduct = async (req: Request, res: Response, next: nf) => {
     const product = await Product.findOneAndUpdate(
       { _id: id },
       { title, description, price },
-      { new: true }
+      { new: true },
     );
     res.status(201).json(product);
   } catch (err) {

@@ -1,12 +1,12 @@
-import Moderator from "../models/moderatorsModel";
-import { Response, Request, NextFunction as nf } from "express";
-import { passwordValidator } from "../utils/passwordValidator";
-import { generateHash } from "../utils/HashPassword";
+import Moderator from '../models/moderatorsModel';
+import { Response, Request, NextFunction as nf } from 'express';
+import { passwordValidator } from '../utils/passwordValidator';
+import { generateHash } from '../utils/HashPassword';
 
 export const getAllModerators = async (
   req: Request,
   res: Response,
-  next: nf
+  next: nf,
 ) => {
   try {
     const moderators = await Moderator.find();
@@ -19,7 +19,7 @@ export const getAllModerators = async (
 export const getOneModerator = async (
   req: Request,
   res: Response,
-  next: nf
+  next: nf,
 ) => {
   const moderatorId = req.params.id;
   try {
@@ -33,13 +33,13 @@ export const getOneModerator = async (
 export const InsertModerator = async (
   req: Request,
   res: Response,
-  next: nf
+  next: nf,
 ) => {
   try {
     const { username, email, password, role } = req.body;
-    if (!passwordValidator(password)) return res.status(400).json({message:"password not valid"});
-const hash = generateHash(password)
-    const moderator = new Moderator({ username, email, password:hash, role });
+    if (!passwordValidator(password)) return res.status(400).json({message: 'password not valid'});
+    const hash = generateHash(password);
+    const moderator = new Moderator({ username, email, password: hash, role });
     await moderator.save();
     res.status(201).json(moderator);
   } catch (err) {
@@ -50,7 +50,7 @@ const hash = generateHash(password)
 export const updateModerator = async (
   req: Request,
   res: Response,
-  next: nf
+  next: nf,
 ) => {
   try {
     const id = req.params.id;
@@ -58,7 +58,7 @@ export const updateModerator = async (
     const moderator = await Moderator.findOneAndUpdate(
       { _id: id },
       { username, email, password, role },
-      { new: true }
+      { new: true },
     );
     res.status(201).json(moderator);
   } catch (err) {
@@ -69,7 +69,7 @@ export const updateModerator = async (
 export const deleteModerator = async (
   req: Request,
   res: Response,
-  next: nf
+  next: nf,
 ) => {
   try {
     const id = req.params.id;

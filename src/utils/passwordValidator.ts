@@ -1,4 +1,4 @@
-export const passwordValidator = (password: string) :boolean=> {
+export const passwordValidator = (password: string) :boolean => {
   if (
     password.length < 8 ||
     !containsUppercase(password) ||

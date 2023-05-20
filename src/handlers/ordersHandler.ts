@@ -1,5 +1,5 @@
-import Order from "../models/ordersModel";
-import { Response, Request, NextFunction as nf } from "express";
+import Order from '../models/ordersModel';
+import { Response, Request, NextFunction as nf } from 'express';
 
 export const getAllOrders = async (req: Request, res: Response, next: nf) => {
   try {
@@ -50,7 +50,7 @@ export const updateOrder = async (req: Request, res: Response, next: nf) => {
     const order = await Order.findOneAndUpdate(
       { _id: id },
       { productId, userId },
-      { new: true }
+      { new: true },
     );
     res.status(201).json(order);
   } catch (err) {

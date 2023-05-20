@@ -1,6 +1,6 @@
-import { Response, Request, NextFunction as NF } from "express";
+import { Response, Request, NextFunction as NF } from 'express';
 // Import required dependencies
-import fs from "fs";
+import fs from 'fs';
 
 // Create Express app
 
@@ -10,7 +10,7 @@ export function auditMiddleware(req: Request, res: Response, next: NF) {
   const auditLog = `Incoming Request: ${req.method} ${req.originalUrl}\n`;
 
   // Log the incoming request
-  fs.appendFileSync("audit.log", auditLog, { flag: "a" });
+  fs.appendFileSync('audit.log', auditLog, { flag: 'a' });
 
   // Store the start time of the request
   const startTime = new Date().getTime();
@@ -23,12 +23,12 @@ export function auditMiddleware(req: Request, res: Response, next: NF) {
 
     // Log the outgoing response
     const responseLog = `Outgoing Response: ${req.method} ${req.originalUrl} ${res.statusCode}\n`;
-    fs.appendFileSync("audit.log", responseLog, { flag: "a" });
+    fs.appendFileSync('audit.log', responseLog, { flag: 'a' });
 
     // Calculate the request duration
     const duration = new Date().getTime() - startTime;
     const durationLog = `Request Duration: ${duration}ms\n`;
-    fs.appendFileSync("audit.log", durationLog, { flag: "a" });
+    fs.appendFileSync('audit.log', durationLog, { flag: 'a' });
 
     // Call the original res.end method
     res.end = originalEnd;

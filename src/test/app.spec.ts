@@ -8,10 +8,10 @@ describe('App', () => {
     expect(response.text).toBe('Hello, World!');
   });
 
-//   it('should create a new user when sending a POST request to /users', async () => {
-//     const response = await request(app)
-//       .post('/users')
-//       .send({ name: 'John Doe', email: 'john@example.com' });
+  //   it('should create a new user when sending a POST request to /users', async () => {
+  //     const response = await request(app)
+  //       .post('/users')
+  //       .send({ name: 'John Doe', email: 'john@example.com' });
 
 //     expect(response.status).toBe(200);
 //     expect(response.text).toBe('User created successfully');

@@ -1,7 +1,6 @@
-import User from "../models/usersModel";
-import mongoose from "mongoose";
-import { Response, Request } from "express";
-import { NextFunction as nf } from "connect";
+import User from '../models/usersModel';
+import { Response, Request } from 'express';
+import { NextFunction as nf } from 'connect';
 
 
 export const getAllUsers = async (req: Request, res: Response, next: nf) => {
@@ -18,7 +17,7 @@ export const getOneUser = async (req: Request, res: Response, next: nf) => {
   try {
     const updatedUser = await User.findOne({ _id: userId });
     if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
     res.status(200).json(updatedUser);
   } catch (err) {
@@ -44,7 +43,7 @@ export const updateUser = async (req: Request, res: Response, next: nf) => {
     const user = await User.findOneAndUpdate(
       { _id: id },
       { username, email, password, address },
-      { new: true }
+      { new: true },
     );
     res.status(201).json(user);
   } catch (err) {
@@ -57,7 +56,7 @@ export const deleteUser = async (req: Request, res: Response, next: nf) => {
     const id = req.params.id;
     const user = await User.deleteOne({ _id: id });
     if (!user) {
-      console.log("User not found");
+      console.log('User not found');
       return;
     }
     res.status(204).json(user);

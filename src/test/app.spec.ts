@@ -1,5 +1,10 @@
 import request from 'supertest';
 import app from '../app';
+import { SpecReporter } from 'jasmine-spec-reporter';
+
+// Configure the Jasmine Spec Reporter
+jasmine.getEnv().clearReporters();
+jasmine.getEnv().addReporter(new SpecReporter());
 
 describe('App', () => {
   it('should return "Hello, World!" when accessing the root path', async () => {

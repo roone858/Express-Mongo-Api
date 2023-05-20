@@ -27,8 +27,10 @@ exports.getAllOrders = getAllOrders;
 const getOneOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const orderId = req.params.id;
     try {
-        const updatedOrder = yield ordersModel_1.default.findOne({ _id: orderId });
-        res.status(201).json(updatedOrder);
+        const order = yield ordersModel_1.default.findOne({ _id: orderId });
+        if (!order)
+            return res.status(404).json({ message: 'Order Not Found' });
+        res.status(201).json(order);
     }
     catch (err) {
         next(err);
@@ -78,6 +80,8 @@ const updateOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         const id = req.params.id;
         const { productId, userId } = req.body;
         const order = yield ordersModel_1.default.findOneAndUpdate({ _id: id }, { productId, userId }, { new: true });
+        if (!order)
+            return res.status(404).json({ message: 'Order Not Found' });
         res.status(201).json(order);
     }
     catch (err) {

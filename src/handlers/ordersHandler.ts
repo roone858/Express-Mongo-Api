@@ -13,8 +13,9 @@ export const getAllOrders = async (req: Request, res: Response, next: nf) => {
 export const getOneOrder = async (req: Request, res: Response, next: nf) => {
   const orderId = req.params.id;
   try {
-    const updatedOrder = await Order.findOne({ _id: orderId });
-    res.status(201).json(updatedOrder);
+    const order = await Order.findOne({ _id: orderId });
+    if (!order) return res.status(404).json({ message: 'Order Not Found' });
+    res.status(201).json(order);
   } catch (err) {
     next(err);
   }
@@ -72,6 +73,8 @@ export const updateOrder = async (req: Request, res: Response, next: nf) => {
       { productId, userId },
       { new: true },
     );
+    if (!order) return res.status(404).json({ message: 'Order Not Found' });
+
     res.status(201).json(order);
   } catch (err) {
     next(err);

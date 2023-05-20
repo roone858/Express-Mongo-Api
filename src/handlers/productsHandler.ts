@@ -13,8 +13,9 @@ export const getAllProducts = async (req: Request, res: Response, next: nf) => {
 export const getOneProduct = async (req: Request, res: Response, next: nf) => {
   const productId = req.params.id;
   try {
-    const updatedProduct = await Product.findOne({ _id: productId });
-    res.status(201).json(updatedProduct);
+    const product = await Product.findOne({ _id: productId });
+    if (!product) return res.status(404).json({ message: 'Product Not Found' });
+    res.status(201).json(product);
   } catch (err) {
     next(err);
   }
@@ -40,6 +41,7 @@ export const updateProduct = async (req: Request, res: Response, next: nf) => {
       { title, description, price },
       { new: true },
     );
+    if (!product) return res.status(404).json({ message: 'Product Not Found' });
     res.status(201).json(product);
   } catch (err) {
     next(err);
@@ -50,6 +52,7 @@ export const deleteProduct = async (req: Request, res: Response, next: nf) => {
   try {
     const id = req.params.id;
     const product = await Product.deleteOne({ _id: id });
+    if (!product) return res.status(404).json({ message: 'Product Not Found' });
     res.status(201).json(product);
   } catch (err) {
     next(err);

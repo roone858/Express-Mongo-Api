@@ -27,8 +27,10 @@ exports.getAllProducts = getAllProducts;
 const getOneProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const productId = req.params.id;
     try {
-        const updatedProduct = yield productsModel_1.default.findOne({ _id: productId });
-        res.status(201).json(updatedProduct);
+        const product = yield productsModel_1.default.findOne({ _id: productId });
+        if (!product)
+            return res.status(404).json({ message: 'Product Not Found' });
+        res.status(201).json(product);
     }
     catch (err) {
         next(err);
@@ -52,6 +54,8 @@ const updateProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         const id = req.params.id;
         const { title, description, price } = req.body;
         const product = yield productsModel_1.default.findOneAndUpdate({ _id: id }, { title, description, price }, { new: true });
+        if (!product)
+            return res.status(404).json({ message: 'Product Not Found' });
         res.status(201).json(product);
     }
     catch (err) {
@@ -63,6 +67,8 @@ const deleteProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     try {
         const id = req.params.id;
         const product = yield productsModel_1.default.deleteOne({ _id: id });
+        if (!product)
+            return res.status(404).json({ message: 'Product Not Found' });
         res.status(201).json(product);
     }
     catch (err) {

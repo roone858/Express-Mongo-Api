@@ -14,6 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../app"));
+const jasmine_spec_reporter_1 = require("jasmine-spec-reporter");
+// Configure the Jasmine Spec Reporter
+jasmine.getEnv().clearReporters();
+jasmine.getEnv().addReporter(new jasmine_spec_reporter_1.SpecReporter());
 describe('App', () => {
     it('should return "Hello, World!" when accessing the root path', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app_1.default).get('/');
